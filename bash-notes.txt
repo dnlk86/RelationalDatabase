@@ -1,0 +1,18 @@
+BASH COMMANDS:
+
+cd <path>		->	change directory
+.	->	shortcut for current directory
+.. 	->	shortcut for previous directory
+rm <filename>	->	remove
+mv <filename>	->	move
+cp <filename or directory> -> copy
+rm -r		-> remove recursively, caution it deletes all files and sub folders
+ls	-> list
+ls -a	-> it lists also hidden files
+find	->	display tree
+more <filename>		-> displais file content
+mkdir	-> make directory
+rmdir	-> remove directory
+touch <filename.extension>	-> create file
+echo <text>		-> prints out a text
+echo <text> >> <filename> 	->	writes a text into a file

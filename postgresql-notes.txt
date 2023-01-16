@@ -1,0 +1,37 @@
+POSTGRESQL NOTES: 
+
+psql --username=<username> --dbname=<dbname>	-> to login to the interactive postgresql
+\l				->	to list databases
+\d				->	to list tables of a db
+\d <tablename> 	-> 	to retrieve details of a specific table
+\c				->	to connect to a specific DB
+CREATE TABLE table_name();		-> to create a new table
+CREATE DATABASE database_name;	-> to create a new DB
+ALTER TABLE <table_name> ADD COLUMN <column_name> DATATYPE;		-> to add columns to a table
+ALTER TABLE <table_name> DROP COLUMN <column_name>;		-> to remove columns from a table
+ALTER TABLE <table_name> RENAME COLUMN <column_name> TO <new_column_name>;		-> rename a column of a table
+INSERT INTO <table_name>(<column_1>, <column_2>) VALUES(<value_1>, <value_2>);		-> insert a row into a table
+SELECT * FROM <table_name>						-> basic query selecting all columns
+DELETE FROM <table_name> WHERE <where_condition>;					-> delete row/s depending on a condition (e.g. id = 1);
+DROP TABLE <table_name>;				-> to delete an entire table and its content;
+ALTER DATABASE <database_name> RENAME TO <new_database_name>;			->	to rename a DB
+DROP DATABASE <database_name>;			-> to delete an entire database and its content;
+UPDATE <table_name> SET <column_name>=<new_value> WHERE <where_condition>;		-> update a value/s based on a condition/s
+ALTER TABLE <table_name> ADD PRIMARY KEY(column_name);		-> 	to add a primary key
+ALTER TABLE <table_name> DROP CONSTRAINT <constraint_name>		-> to remove a primary key (constraint_name can be seen with \d <table_name>)
+ALTER TABLE <table_name> ADD  COLUMN <column_name> DATATYPE REFERECES <referenced_table_name>(<referenced_column_name>);		-> to create a foreign key, and therefore create a reference between two tables
+ALTER TABLE <table_name> ADD UNIQUE(<column_name>); 		-> to add a univocity constraint to to a foreign key (one to one relationship between tables);
+ALTER TABLE <table_name> ALTER COLUMN <column_name> SET NOT NULL;		-> 	to create a NOT NULL constraint in a column
+CREATE TABLE <table_name>(<column_name_1> DATATYPE CONSTRAINTS, <column_name_2> DATATYPE CONSTRAINTS, ... , <column_name_n> DATATYPE CONSTRAINTS);	-> to create a table and columns at the same time
+
+many-to-many relationships usually use a junction table to link two tables together, forming two one-to-many relationships
+
+ALTER TABLE <table_name> ADD PRIMARY KEY(column_1, column_2); 	->	to add a composite primary key for two columns
+SELECT columns FROM table_1 FULL JOIN table_2 ON table_1.primary_key_column = table_2.foreign_key_column;	-> to perform a join between two tables
+
+SELECT columns FROM junction_table
+FULL JOIN table_1 ON junction_table.foreign_key_column = table_1.primary_key_column
+FULL JOIN table_2 ON junction_table.foreign_key_column = table_2.primary_key_column			->  to perform a join between tables that share a many-to-many relationships through the junction_table 
+
+
+
