@@ -9,6 +9,7 @@ cp <filename or directory> -> copy
 rm -r		-> remove recursively, caution it deletes all files and sub folders
 ls	-> list
 ls -a	-> it lists also hidden files
+ls -l   -> lists the files in a folder in the long list format showing permissions
 find	->	display tree
 more <filename>		-> displais file content
 mkdir	-> make directory
@@ -16,3 +17,27 @@ rmdir	-> remove directory
 touch <filename.extension>	-> create file
 echo <text>		-> prints out a text
 echo <text> >> <filename> 	->	writes a text into a file
+
+++++++++++
+
+touch filename.sh   ->  to create a script file
+sh filename.sh  ->  to run a script with the shell interpreter
+bash filename.sh    ->  to run a script with the bash interpreter, bash stands for bourne-again shell
+which bash  ->  to find where the bash interpreter is located
+#!<path_to_interpreter>     -> it is called a shebang and must be placed on top of the script file in
+                                order to use a specific interpreter without calling it directly: 
+                                    #!/bin/bash
+                                    echo hello world!
+                            ->  now the file is executed by simply typing ./filename.sh in the terminal
+r, w, x -> in permissions indicate respectively read, write and executed
+chmod +x filename.sh    -> to add executable permission to a file for all users
+VARIAbLE_NAME=VALUE      -> to create a variable (note no space between name and value)
+$VARIABLE_NAME          -> to use a variable somewhere in the script
+read VARIABLE_NAME      -> to accept input from user and store it in a variable
+echo -e "\n~~ SomeText ~~\n"    -> to print a text with a preceding and a following empty line
+man <commandName>       -> to display the manual for a certain command
+# comment               -> that's how comments are done
+echo $*                 -> to print all the arguments passed to a program while executing it
+./programName arg1 arg2 arg3    -> to pass arguments to a bash script
+$1                      -> to access the first argument passed (arg1)
+help                    -> to list all the built-in commands
