@@ -40,4 +40,26 @@ man <commandName>       -> to display the manual for a certain command
 echo $*                 -> to print all the arguments passed to a program while executing it
 ./programName arg1 arg2 arg3    -> to pass arguments to a bash script
 $1                      -> to access the first argument passed (arg1)
-help                    -> to list all the built-in commands
+help                    -> to list all the built-in command
+[[ expression ]]        -> expressions go inside double square braces
+help test               -> to see the possible operators
+echo $?                 -> to print the exit status of a command (all commands have one). 0 for no 
+                            errors, 1 or more when errors occur
+: '
+    multi
+    line
+    comment
+'
+printenv                -> to print out all enviroment variables in shell
+declare -p              -> p stands for print, it prints out all variables in the shell, it includes 
+                            env variables and all other created in the shell
+$RANDOM                 -> this variable generates a random number between 0 and 32767. with the mod 
+                            operator can be added can be added a range: $RANDOM%100
+help let                -> to see all available operators available in arithmetic expressions
+$(( ...some expression ))  -> to perform some operation without altering the value of the variables 
+                                used in it. This is how a variable can be assigned to some calculation
+
+                                *** as a reminder, (( ... )) will perform a calculation or operation and 
+                                output nothing. $(( ... )) will replace the calculation with the result of it
+declare                 -> can be used to create variables
+declare -p Somevariable -> to view the variable and its value
