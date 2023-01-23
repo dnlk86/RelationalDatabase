@@ -66,3 +66,4 @@ declare -p Somevariable -> to view the variable and its value
 ARR=("a" "b" "c")       -> to declare an array
 echo ${ARR[1]}          -> to print the first item of the array
 echo ${ARR[@]}          -> to print all items of an array
+type <command name>     -> to display the type of a command
