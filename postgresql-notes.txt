@@ -20,6 +20,7 @@ UPDATE <table_name> SET <column_name>=<new_value> WHERE <where_condition>;		-> u
 ALTER TABLE <table_name> ADD PRIMARY KEY(column_name);		-> 	to add a primary key
 ALTER TABLE <table_name> DROP CONSTRAINT <constraint_name>		-> to remove a primary key (constraint_name can be seen with \d <table_name>)
 ALTER TABLE <table_name> ADD  COLUMN <column_name> DATATYPE REFERECES <referenced_table_name>(<referenced_column_name>);		-> to create a foreign key, and therefore create a reference between two tables
+ALTER TABLE <table_name> ADD FOREIGN KEY(<column_name>) REFERECES <referenced_table_name>(<referenced_column_name>);		-> to add the foreign key constraint to a already existing column
 ALTER TABLE <table_name> ADD UNIQUE(<column_name>); 		-> to add a univocity constraint to to a foreign key (one to one relationship between tables);
 ALTER TABLE <table_name> ALTER COLUMN <column_name> SET NOT NULL;		-> 	to create a NOT NULL constraint in a column
 CREATE TABLE <table_name>(<column_name_1> DATATYPE CONSTRAINTS, <column_name_2> DATATYPE CONSTRAINTS, ... , <column_name_n> DATATYPE CONSTRAINTS);	-> to create a table and columns at the same time
