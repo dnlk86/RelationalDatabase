@@ -67,3 +67,5 @@ ARR=("a" "b" "c")       -> to declare an array
 echo ${ARR[1]}          -> to print the first item of the array
 echo ${ARR[@]}          -> to print all items of an array
 type <command name>     -> to display the type of a command
+cat                     -> to print the content of a file in the terminal
+declare -p IFS          -> a variable to determine words boudaries, the default is space, tabs and newlines
