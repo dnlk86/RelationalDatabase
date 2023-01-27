@@ -2,6 +2,7 @@
 
 # Script to insert data from courses.csv and students.csv into students database
 
+# This line allows to run psql query directly from this script and then exit from psql
 PSQL="psql -X --username=freecodecamp --dbname=students --no-align --tuples-only -c"
 
 cat courses_test.csv | while IFS="," read MAJOR COURSE
