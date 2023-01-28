@@ -71,3 +71,4 @@ cat                     -> to print the content of a file in the terminal
 declare -p IFS          -> a variable to determine words boudaries, the default is space, tabs and newlines
 pg_dump --clean --create --inserts --username=freecodecamp students > students.sql      -> to create a dump
                          of the students database and store it in the students.sql file
+psql -U postgres < students.sql     -> to rebuild a database from a previously made db dump
