@@ -22,10 +22,19 @@ echo -e "\nFirst name, last name, and GPA of students who have not selected a ma
 echo "$($PSQL "SELECT first_name, last_name, gpa FROM students WHERE major_id IS NULL AND (first_name LIKE 'D%' OR gpa > 3.0)")"
 
 echo -e "\nCourse name of the first five courses, in reverse alphabetical order, that have an 'e' as the second letter or end with an 's':"
-echo "$($PSQL "SELECT course FROM courses WHERE course LIKE '_e%' OR course LIKE '%s' ORDER BY course DESC LIMIT 5;")"
+echo "$($PSQL "SELECT course FROM courses WHERE course LIKE '_e%' OR course LIKE '%s' ORDER BY course DESC LIMIT 5")"
 
 echo -e "\nAverage GPA of all students rounded to two decimal places:"
-echo "$($PSQL "SELECT ROUND(AVG(gpa), 2) FROM students;")"
+echo "$($PSQL "SELECT ROUND(AVG(gpa), 2) FROM students")"
 
 echo -e "\nMajor ID, total number of students in a column named 'number_of_students', and average GPA rounded to two decimal places in a column name 'average_gpa', for each major ID in the students table having a student count greater than 1:"
-echo "$($PSQL "SELECT major_id, COUNT(*) AS number_of_students, ROUND(AVG(gpa), 2) AS average_gpa FROM students GROUP BY major_id HAVING COUNT(*) > 1;")"
+echo "$($PSQL "SELECT major_id, COUNT(*) AS number_of_students, ROUND(AVG(gpa), 2) AS average_gpa FROM students GROUP BY major_id HAVING COUNT(*) > 1")"
+
+echo -e "\nList of majors, in alphabetical order, that either no student is taking or has a student whose first name contains a case insensitive 'ma':"
+echo "$($PSQL "SELECT DISTINCT(major) FROM majors FULL JOIN students ON majors.major_id = students.major_id WHERE first_name is null OR first_name ILIKE '%ma%' ORDER BY major;")"
+
+echo -e "\nList of unique courses, in reverse alphabetical order, that no student or 'Obie Hilpert' is taking:"
+echo "$($PSQL "SELECT DISTINCT(course) FROM students FULL JOIN majors USING(major_id) FULL JOIN majors_courses USING (major_id) FULL JOIN courses USING(course_id) WHERE first_name IS NULL OR CONCAT(first_name, ' ', last_name) = 'Obie Hilpert' ORDER BY course DESC;")"
+
+echo -e "\nList of courses, in alphabetical order, with only one student enrolled:"
+echo "$($PSQL "SELECT course FROM students FULL JOIN majors USING(major_id) FULL JOIN majors_courses USING(major_id) FULL JOIN courses USING(course_id) WHERE first_name IS NOT NULL GROUP BY course HAVING COUNT(*) = 1 ORDER BY course ASC;")"

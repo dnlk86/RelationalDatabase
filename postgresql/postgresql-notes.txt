@@ -33,6 +33,10 @@ SELECT columns FROM table_1 FULL JOIN table_2 ON table_1.primary_key_column = ta
 SELECT columns FROM junction_table
 FULL JOIN table_1 ON junction_table.foreign_key_column = table_1.primary_key_column
 FULL JOIN table_2 ON junction_table.foreign_key_column = table_2.primary_key_column			->  to perform a join between tables that share a many-to-many relationships through the junction_table 
-
+                                                                                                a FULL JOIN shows all the rows in both the tables in the query
+SELECT * FROM left_table LEFT JOIN right_table ON left_table.left_id = right_table.left_id  -> performs a join between two tables, showing all the data in the left one and only the data of the 
+                                                                                                right table that has a reletionship with the one in the left table.                                                                                                
+SELECT * FROM left_table RIGHT JOIN right_table ON left_table.left_id = right_table.left_id -> returns all the data in the right_table and only the linked data in the left_table
+SELECT * FROM left_table INNER JOIN right_table ON left_table.left_id = right_table.left_id -> returns all the data from the intersection between two tables (only if there is a match/link between tables)
 
 
