@@ -78,7 +78,15 @@ echo hello world > stdout.txt           -> to print the string "hello world" in 
                                         it is overwritten.
 echo more text... >> stdout.txt         -> to add more content to the stdout.txt file, instead of overwriting it
 echo bad_command > stderr.txt           -> to print the error message in the stderr.txt file
-echo hello world 1> stdout.txt          -> same as > stdout.txt
+echo hello world 1> stdout.txt          -> to redirect the output, same as > stdout.txt
+echo bad_command 2> stderr.txt          -> to redirect an error
 >                                       -> redirects the output
-<                                       -> redirects the input
+<                                       -> redirects the input, example:
+                                            ./script.sh < name.txt
 cat                     -> it will print the content of a file line by line
+echo Hulix | ./script.sh 2> stderr.txt 1> stdout.txt        -> 'Hulix' is passed with the pipe operator as the 
+                                        read input of the script.sh, the error ist passed to stderr.txt with the
+                                        2> operator, and lastly the output of the script ist passed to the stdout.txt
+                                        file through the 1> operator
+./script.sh < name.txt 2> stderr.txt 1> stdout.txt -> redirects the content of name.txt as the input of script.sh
+                                        redirects the error to stderr.txt and the output to stdout.txt
