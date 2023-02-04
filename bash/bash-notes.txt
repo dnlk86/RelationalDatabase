@@ -72,3 +72,13 @@ declare -p IFS          -> a variable to determine words boudaries, the default 
 pg_dump --clean --create --inserts --username=freecodecamp students > students.sql      -> to create a dump
                          of the students database and store it in the students.sql file
 psql -U postgres < students.sql     -> to rebuild a database from a previously made db dump
+command_1 | command_2   -> pipe operator is used to assign the output of a command as the input of another one
+echo hello world > stdout.txt           -> to print the string "hello world" in the stdout.txt file instead
+                                        of the terminal. If the file does not exist, it is created, otherwise 
+                                        it is overwritten.
+echo more text... >> stdout.txt         -> to add more content to the stdout.txt file, instead of overwriting it
+echo bad_command > stderr.txt           -> to print the error message in the stderr.txt file
+echo hello world 1> stdout.txt          -> same as > stdout.txt
+>                                       -> redirects the output
+<                                       -> redirects the input
+cat                     -> it will print the content of a file line by line
