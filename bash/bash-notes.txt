@@ -90,3 +90,8 @@ echo Hulix | ./script.sh 2> stderr.txt 1> stdout.txt        -> 'Hulix' is passed
                                         file through the 1> operator
 ./script.sh < name.txt 2> stderr.txt 1> stdout.txt -> redirects the content of name.txt as the input of script.sh
                                         redirects the error to stderr.txt and the output to stdout.txt
+wc <filename>                           -> stands for word count, it prints out some info about a file, lines num, 
+                                        word num, bytes num
+grep '<pattern>' <filename>             -> is a command for searching patterns in texts
+grep '<pattern>' <filename> --color     -> to highlight the searched pattern. There are even more flag (look "man grep")
+sed 's/<pattern_to_replace>/<pattern_to_replace_it_with>/' <filename>
