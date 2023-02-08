@@ -95,3 +95,13 @@ wc <filename>                           -> stands for word count, it prints out 
 grep '<pattern>' <filename>             -> is a command for searching patterns in texts
 grep '<pattern>' <filename> --color     -> to highlight the searched pattern. There are even more flag (look "man grep")
 sed 's/<pattern_to_replace>/<pattern_to_replace_it_with>/' <filename>
+                    the two commands can also be chained together with the pipe operator:
+grep -n 'meow[a-z]*' kitty_ipsum_1.txt | sed -E '([0-9]+).*/\1/' >> kitty_info.txt
+                    -> selects all words starting with 'meow' and their line numbers
+                    -> replaces all the characters except the line numbers
+                    -> append the result to the kitty_info.txt file
+sed 's/<pattern_1>/<replacement_1>/; s/<pattern_2>/<replacement_2>/'
+                    -> this way it is possible to replace multiple patterns all at once. The two replacement patterns
+                    -> need to be both wrapped in quotes and separated by a semi-colon
+diff <file_1> <file_2>              -> command to view differences between two files
+                                    -> accepts several flags like the color flag (--color)
