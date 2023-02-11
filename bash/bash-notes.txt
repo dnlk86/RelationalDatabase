@@ -105,3 +105,9 @@ sed 's/<pattern_1>/<replacement_1>/; s/<pattern_2>/<replacement_2>/'
                     -> need to be both wrapped in quotes and separated by a semi-colon
 diff <file_1> <file_2>              -> command to view differences between two files
                                     -> accepts several flags like the color flag (--color)
+case EXPRESSION in
+  PATTERN) STATEMENTS ;;
+  PATTERN) STATEMENTS ;;
+  PATTERN) STATEMENTS ;;
+  *) STATEMENTS ;;
+esac                                -> to build a case statement
