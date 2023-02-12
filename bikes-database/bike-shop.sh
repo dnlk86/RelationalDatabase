@@ -1,4 +1,5 @@
 #!/bin/bash
+
 PSQL="psql -X --username=freecodecamp --dbname=bikes --tuples-only -c"
 
 echo -e "\n~~~~~ Bike Rental Shop ~~~~~\n"
@@ -8,14 +9,23 @@ MAIN_MENU() {
   then
     echo -e "\n$1"
   fi
+
   echo "How may I help you?" 
   echo -e "\n1. Rent a bike\n2. Return a bike\n3. Exit"
   read MAIN_MENU_SELECTION
+
+  case $MAIN_MENU_SELECTION in
+    1) RENT_MENU ;;
+    2) RETURN_MENU ;;
+    3) EXIT ;;
+    *) MAIN_MENU "Please enter a valid option." ;;
+  esac
 }
 
 RENT_MENU() {
   # get available bikes
-  AVAILABLE_BIKES=$($PSQL "SELECT bike_id, type, size FROM bikes WHERE available='true' ORDER BY bike_id;")
+  AVAILABLE_BIKES=$($PSQL "SELECT bike_id, type, size FROM bikes WHERE available = true ORDER BY bike_id")
+
   # if no bikes available
   if [[ -z $AVAILABLE_BIKES ]]
   then
@@ -28,14 +38,50 @@ RENT_MENU() {
     do
       echo "$BIKE_ID) $SIZE\" $TYPE Bike"
     done
+
     # ask for bike to rent
     echo -e "\nWhich one would you like to rent?"
     read BIKE_ID_TO_RENT
+
     # if input is not a number
     if [[ ! $BIKE_ID_TO_RENT =~ ^[0-9]+$ ]]
     then
       # send to main menu
       MAIN_MENU "That is not a valid bike number."
+    else
+      # get bike availability
+      BIKE_AVAILABILITY=$($PSQL "SELECT available FROM bikes WHERE bike_id=$BIKE_ID_TO_RENT AND available=true;")
+      # if not available
+      if [[ -z $BIKE_AVAILABILITY ]]
+      then
+        #send to main menu
+      MAIN_MENU "That bike is not available."
+      else
+        # get customer info
+        echo -e "\nWhat's your phone number?"
+        read PHONE_NUMBER
+        CUSTOMER_NAME=$($PSQL "SELECT name FROM customers WHERE phone='$PHONE_NUMBER';")
+        # if customer doesn't exist
+        if [[ -z $CUSTOMER_NAME ]]
+        then
+        # get new customer name
+        echo -e "\nWhat's your name?"
+        read CUSTOMER_NAME
+        # insert new customer
+        INSERT_CUSTOMER_RESULT=$($PSQL "INSERT INTO customers(phone, name) VALUES('$PHONE_NUMBER', '$CUSTOMER_NAME');")
+        fi
+        # get customer_id
+        CUSTOMER_ID=$($PSQL "SELECT customer_id FROM customers WHERE phone='$PHONE_NUMBER';")
+        # insert bike rental
+        INSERT_RENTAL_RESULT=$($PSQL "INSERT INTO rentals(customer_id, bike_id) VALUES($CUSTOMER_ID, $BIKE_ID_TO_RENT);")
+        # set bike availability to false
+        SET_TO_FALSE_RESULT=$($PSQL "UPDATE bikes SET available='false' WHERE bike_id=$BIKE_ID_TO_RENT;")
+        # get bike info
+        BIKE_INFO=$($PSQL "SELECT size, type FROM bikes WHERE bike_id=$BIKE_ID_TO_RENT;")
+        BIKE_INFO_FORMATTED=$(echo $BIKE_INFO | sed 's/ |/"/')
+        # send to main menu
+        MAIN_MENU "I have put you down for the $BIKE_INFO_FORMATTED Bike, $CUSTOMER_NAME."
+      fi
     fi
   fi
 }
@@ -49,10 +95,3 @@ EXIT() {
 }
 
 MAIN_MENU
-
-case $MAIN_MENU_SELECTION in
-  1) RENT_MENU ;;
-  2) RETURN_MENU ;;
-  3) EXIT ;;
-  *) MAIN_MENU "Please enter a valid option.";;
-esac
