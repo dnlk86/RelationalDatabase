@@ -5,14 +5,26 @@ PSQL="psql -X --username=freecodecamp --dbname=salon --tuples-only -c"
 echo -e "\n~~~~~ Daniel's Salon ~~~~~\n"
 
 MAIN_MENU() {
-  echo -e "\nWelcome to my Salon, how can I help you?"
-  echo -e "\n1. View our services\n2. Schedule an appointment"
+  if [[ $1 ]]
+  then
+    echo -e "\n$1"
+  fi
 
-  read MAIN_MENU_SELECTION
-  case $MAIN_MENU_SELECTION in
-  1) LIST_AVAILABLE_SERVICES ;;
-  2) SCHEDULE_APPOINTMENT ;;
-  *) MAIN_MENU ;;
+  LIST_AVAILABLE_SERVICES
+
+  echo -e "\nHow can I help you?"
+
+  # echo -e "\n1. Schedule an appointment\n2. Exit"
+
+  read SERVICE_SELECTION
+  case $SERVICE_SELECTION in
+  1) HAIRCUT ;;
+  2) HAIRSTYLE ;;
+  3) HAIRTRIM ;;
+  4) HAIRSHAVE ;;
+  5) BEARDTRIM ;;
+  6) BEARDSHAVE ;;
+  *) MAIN_MENU "I'm sorry we do not offer that service." ;;
   esac
 }
 
@@ -23,9 +35,6 @@ LIST_AVAILABLE_SERVICES() {
   do
     echo "$SERVICE_ID) $SERVICE_NAME"
   done
-
-  # at last return to main menu
-  MAIN_MENU
 }
 
 SCHEDULE_APPOINTMENT() {
