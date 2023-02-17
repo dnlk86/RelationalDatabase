@@ -10,40 +10,42 @@ MAIN_MENU() {
     echo -e "\n$1"
   fi
 
-  LIST_AVAILABLE_SERVICES
-
-  echo -e "\nHow can I help you?"
-
-  # echo -e "\n1. Schedule an appointment\n2. Exit"
-
-  read SERVICE_SELECTION
-  case $SERVICE_SELECTION in
-  1) HAIRCUT ;;
-  2) HAIRSTYLE ;;
-  3) HAIRTRIM ;;
-  4) HAIRSHAVE ;;
-  5) BEARDTRIM ;;
-  6) BEARDSHAVE ;;
-  *) MAIN_MENU "I'm sorry we do not offer that service." ;;
-  esac
-}
-
-LIST_AVAILABLE_SERVICES() {
   AVAILABLE_SERVICES=$($PSQL "SELECT * FROM services ORDER BY service_id;")
-  echo "Here a list of our services:"
+  echo -e "\nHere's a list of our services:"
   echo "$AVAILABLE_SERVICES" | while read SERVICE_ID BAR SERVICE_NAME
   do
     echo "$SERVICE_ID) $SERVICE_NAME"
   done
-}
 
-SCHEDULE_APPOINTMENT() {
-  echo "Please enter your phone number:"
-  read PHONE_NUMBER
-  echo $PHONE_NUMBER
+  echo -e "\nPlease enter the service number you want to schedule."
 
-  # at last return to main menu
-  MAIN_MENU
+  read SERVICE_ID_SELECTED
+  # if service does not exist
+  SERVICE_NAME=$($PSQL "SELECT name FROM services WHERE service_id=$SERVICE_ID_SELECTED";)
+  if [[ -z $SERVICE_NAME ]]
+  then
+    # alert the user and send to main menu
+    MAIN_MENU "I'm sorry we do not offer that service."
+  else
+    echo -e "\nPlease enter your phone number:"
+    read CUSTOMER_PHONE
+    CUSTOMER_NAME=$($PSQL "SELECT name FROM customers WHERE phone='$CUSTOMER_PHONE';")
+    if [[ -z $CUSTOMER_NAME ]]
+    then
+      # register a new customer
+      echo -e "You are not registered in our system yet, please enter your name."
+      read CUSTOMER_NAME
+      INSERT_CUSTOMER_RESULT=$($PSQL "INSERT INTO customers(phone, name) VALUES('$CUSTOMER_PHONE', '$CUSTOMER_NAME');")
+      if [[ $INSERT_CUSTOMER_RESULT ]]
+      then
+        echo -e "\nPerfect $CUSTOMER_NAME, you are now registered in our database!"
+      fi
+    else
+      # greet a returning customer
+      echo -e "\nHi $CUSTOMER_NAME, it's great to have you back."
+    fi
+  fi
+
 }
 
 MAIN_MENU
