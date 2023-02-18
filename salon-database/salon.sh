@@ -33,17 +33,24 @@ MAIN_MENU() {
     if [[ -z $CUSTOMER_NAME ]]
     then
       # register a new customer
-      echo -e "You are not registered in our system yet, please enter your name."
+      echo -e "You are not registered in our system yet, please enter your name:"
       read CUSTOMER_NAME
-      INSERT_CUSTOMER_RESULT=$($PSQL "INSERT INTO customers(phone, name) VALUES('$CUSTOMER_PHONE', '$CUSTOMER_NAME');")
+      INSERT_CUSTOMER_RESULT=$($PSQL "INSERT INTO customers(phone, name) VALUES('$CUSTOMER_PHONE','$CUSTOMER_NAME');")
       if [[ $INSERT_CUSTOMER_RESULT ]]
       then
+        CUSTOMER_NAME=$($PSQL "SELECT name FROM customers WHERE phone='$CUSTOMER_PHONE';")
         echo -e "\nPerfect $CUSTOMER_NAME, you are now registered in our database!"
       fi
     else
       # greet a returning customer
-      echo -e "\nHi $CUSTOMER_NAME, it's great to have you back."
+      echo -e "\nHi$CUSTOMER_NAME, it's great to have you back."
     fi
+    CUSTOMER_ID=$($PSQL "SELECT customer_id FROM customers WHERE phone='$CUSTOMER_PHONE';")
+    # enter the time for the desired service
+    echo -e "\nPlease enter the time you want to schedule an appointment (hh:mm):"
+    read SERVICE_TIME
+    INSERT_APPOINTENT_RESULT=$($PSQL "INSERT INTO appointments(customer_id, service_id, time) VALUES($CUSTOMER_ID, $SERVICE_ID_SELECTED, '$SERVICE_TIME');")
+    echo -e "\nI have put you down for a$SERVICE_NAME at $SERVICE_TIME,$CUSTOMER_NAME."
   fi
 
 }
