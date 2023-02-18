@@ -201,14 +201,14 @@ INSERT INTO public.services VALUES (4, 'shave hair');
 -- Name: appointments_appointment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.appointments_appointment_id_seq', 102, true);
+SELECT pg_catalog.setval('public.appointments_appointment_id_seq', 168, true);
 
 
 --
 -- Name: customers_customer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.customers_customer_id_seq', 164, true);
+SELECT pg_catalog.setval('public.customers_customer_id_seq', 230, true);
 
 
 --
